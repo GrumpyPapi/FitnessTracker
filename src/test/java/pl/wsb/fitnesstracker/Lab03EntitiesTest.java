@@ -80,6 +80,20 @@ class Lab03EntitiesTest {
             assertThat(cols).contains("id", "training_id");
         }
     }
+    @Test
+    void shouldHaveAchievementTable() throws Exception {
+        try (Connection conn = dataSource.getConnection()) {
+            assertThat(tableExists(conn, "achievement")).isTrue();
+        }
+    }
+
+    @Test
+    void achievementTableHasUserForeignKey() throws Exception {
+        try (Connection conn = dataSource.getConnection()) {
+            Set<String> cols = tableColumns(conn, "achievement");
+            assertThat(cols).contains("id", "user_id", "name", "earned_at");
+        }
+    }
 
     private boolean tableExists(Connection conn, String expectedName) throws SQLException {
         DatabaseMetaData meta = conn.getMetaData();

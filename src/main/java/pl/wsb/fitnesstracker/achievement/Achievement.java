@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.wsb.fitnesstracker.user.api.User;
-import java.time.LocalDate;
+import java.time.LocalDateTime; // Zmienione z LocalDate
 
 @Entity
-@Table(name = "achievements")
+@Table(name = "achievement") // Poprawione: liczba pojedyncza
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,17 +24,17 @@ public class Achievement {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "date_earned", nullable = false)
-    private LocalDate dateEarned;
+    @Column(name = "earned_at", nullable = false) // Poprawione: nazwa kolumny dla testu
+    private LocalDateTime earnedAt; // Zmienione na LocalDateTime zgodnie z LAB03-2
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false) // Dodane: nullable = false
     private User user;
 
-    public Achievement(String name, String description, LocalDate dateEarned, User user) {
+    public Achievement(String name, String description, LocalDateTime earnedAt, User user) {
         this.name = name;
         this.description = description;
-        this.dateEarned = dateEarned;
+        this.earnedAt = earnedAt;
         this.user = user;
     }
 }
